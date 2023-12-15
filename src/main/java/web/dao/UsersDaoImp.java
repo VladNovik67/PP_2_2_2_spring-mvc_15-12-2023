@@ -1,46 +1,64 @@
 package web.dao;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import web.model.Users;
+import org.springframework.transaction.annotation.Transactional;
+import web.model.User;
 
-import javax.persistence.TypedQuery;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UsersDaoImp implements UsersDao {
 
-    private static final List<Users> userList = new ArrayList<>();
 
-    static {
-        userList.add(new Users("Maibah", "2000", "23"));
-        userList.add(new Users("Audi", "L", "203"));
-        userList.add(new Users("BMV", "XL", "5000"));
-        userList.add(new Users("BMV", "400", "KKK"));
-        userList.add(new Users("LADA", "Grante", "3412"));
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
+    public List<User> getAllUsers() {
+        return entityManager.createQuery("from User", User.class).getResultList();
+    }
+
+    @Transactional
+    public User saveUser(User user) {
+        entityManager.persist(user);
+        entityManager.flush();
+        return user;
     }
 
 
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    @Override
-    public void add(Users user) {
-        sessionFactory.getCurrentSession().save(user);
+    @Transactional
+    public User updateUser(User user) {
+        entityManager.merge(user);
+        entityManager.flush();
+        return user;
     }
 
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Users> getUsers(int count) {
-        TypedQuery<Users> query = sessionFactory.getCurrentSession().createQuery("from Users");
-        if (count == 0) {
-            return query.getResultList();
+    @Transactional
+    public User deleteUser(User user) {
+        if (entityManager.contains(user)) {
+            entityManager.remove(user);
+        } else {
+            entityManager.remove(entityManager.merge(user));
         }
-        return query.getResultList().stream().limit(count).collect(Collectors.toList());
+        return user;
+    }
+
+
+    @Transactional
+    public User getUser(int count) {
+        User response = (User) entityManager.find(User.class, (long) count);
+        return response;
+    }
+
+    @Override
+    public void add(User user) {
+
+    }
+
+    @Override
+    public List<User> getUsers(int count) {
+        return null;
     }
 }
