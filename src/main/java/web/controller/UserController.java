@@ -27,17 +27,11 @@ public class UserController {
         return "users/showAll";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable int id, Model model) {
+    @GetMapping("/")
+    public String show(@RequestParam(value = "id", required = false) int id, Model model) {
         model.addAttribute("getUserId", userService.getUser(id));
         return "users/show";
     }
-
-//    @GetMapping("/")
-//    public String show(@RequestParam int id, Model model) {
-//        model.addAttribute("getUserId", userService.getUser(id));
-//        return "users/show";
-//    }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
