@@ -61,29 +61,4 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping(value = "/get")
-    public String getUser(ModelMap model) {
-        model.addAttribute("student", new User());
-        return "addUserGet";
-    }
-
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
-    @ResponseBody
-    public User saveUser(@RequestBody User user) {
-        return (User) userService.saveUser(user);
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    @ResponseBody
-    public User updateUser(@RequestBody User user) {
-        return (User) userService.updateUser(user);
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @ResponseBody
-    public User deleteUser(@RequestBody User user) {
-        return (User) userService.deleteUser(user);
-    }
-
-
 }
