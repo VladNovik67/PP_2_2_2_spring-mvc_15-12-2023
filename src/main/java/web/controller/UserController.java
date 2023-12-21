@@ -12,9 +12,8 @@ import web.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    //    private List<User> userList;
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -62,19 +61,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-//    -------------------------------------------
-//    @PostMapping("/")
-//    public String processAddStudentForm(User student, @RequestParam("file") MultipartFile file, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "index";
-//        }
-//    }
-//-----------------------------
-
-
     @GetMapping(value = "/get")
-//    @RequestMapping(value = "/get", method = RequestMethod.GET)
-//    @ResponseBody
     public String getUser(ModelMap model) {
         model.addAttribute("student", new User());
         return "addUserGet";
@@ -83,31 +70,20 @@ public class UserController {
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     @ResponseBody
     public User saveUser(@RequestBody User user) {
-        User studentResponse = (User) userService.saveUser(user);
-        return studentResponse;
+        return (User) userService.saveUser(user);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     @ResponseBody
     public User updateUser(@RequestBody User user) {
-        User studentResponse = (User) userService.updateUser(user);
-        return studentResponse;
+        return (User) userService.updateUser(user);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public User deleteUser(@RequestBody User user) {
-        User studentResponse = (User) userService.deleteUser(user);
-        return studentResponse;
+        return (User) userService.deleteUser(user);
     }
 
-
-//    @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public User getUser(@PathVariable int id) {
-//
-//        User studentResponse = (User) userService.getUser(id);
-//        return studentResponse;
-//    }
 
 }

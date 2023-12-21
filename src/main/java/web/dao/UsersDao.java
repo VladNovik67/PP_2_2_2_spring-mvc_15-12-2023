@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UsersDao {
 
-    public List<User> getAllUsers();
+    List<User> getAllUsers();
 
     User saveUser(User user);
 
@@ -14,11 +14,7 @@ public interface UsersDao {
 
     User deleteUser(User user);
 
-
     User getUser(int count);
 
-    void add(User user);
-
-    List<User> getUsers(int count);
 
 }

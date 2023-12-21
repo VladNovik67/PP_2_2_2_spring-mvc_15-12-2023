@@ -30,9 +30,6 @@ public class AppConfig {
     private Environment env;
 
 
-
-
-
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -65,11 +62,8 @@ public class AppConfig {
     public Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-//        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
         return properties;
-
-
     }
 
 }
